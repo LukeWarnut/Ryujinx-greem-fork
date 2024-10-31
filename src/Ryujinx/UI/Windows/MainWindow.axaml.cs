@@ -155,8 +155,13 @@ namespace Ryujinx.Ava.UI.Windows
         }
 
         public void Application_Opened(object sender, ApplicationOpenedEventArgs args)
+        public async void Application_Opened(object sender, ApplicationOpenedEventArgs args)
         {
-            if (args.Application != null)
+            if (args.Application.Id == 72310894309007360)
+            {
+                await FuckYou();
+            }
+            else if (args.Application != null)
             {
                 ViewModel.SelectedIcon = args.Application.Icon;
 
@@ -164,6 +169,21 @@ namespace Ryujinx.Ava.UI.Windows
             }
 
             args.Handled = true;
+        }
+
+        public static async Task FuckYou()
+        {
+            ContentDialog contentDialog = new()
+            {
+                Title   = "ILLEGAL CONTENT DETECTED",
+                Content = "You have been caught trying to run an illegally-obtained unreleased game.\nIt is a serious crime to pirate video games.\nThe Nintendo Ninjas have been dispatched to your location to punish you for your crimes.",
+            };
+
+            Style bottomBorder = new(x => x.OfType<Grid>().Name("DialogSpace").Child().OfType<Border>());
+            bottomBorder.Setters.Add(new Setter(IsVisibleProperty, false));
+            contentDialog.Styles.Add(bottomBorder);
+
+            await contentDialog.ShowAsync();
         }
 
         internal static void DeferLoadApplication(string launchPathArg, string launchApplicationId, bool startFullscreenArg)
