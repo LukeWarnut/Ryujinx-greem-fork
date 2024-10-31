@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Platform;
-using Avalonia.Styling;
 using Avalonia.Threading;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
@@ -30,6 +29,7 @@ using Ryujinx.UI.Common.Configuration;
 using Ryujinx.UI.Common.Helper;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Runtime.Versioning;
 using System.Threading;
@@ -157,7 +157,7 @@ namespace Ryujinx.Ava.UI.Windows
 
         public async void Application_Opened(object sender, ApplicationOpenedEventArgs args)
         {
-            if (args.Application.Id == 72310894309007360)
+            if (args.Application.Id == 72177441207459840)
             {
                 await FuckYou();
             }
@@ -175,15 +175,18 @@ namespace Ryujinx.Ava.UI.Windows
         {
             ContentDialog contentDialog = new()
             {
-                Title   = "ILLEGAL CONTENT DETECTED",
-                Content = "You have been caught trying to run an illegally-obtained unreleased game.\nIt is a serious crime to pirate video games.\nThe Nintendo Ninjas have been dispatched to your location to punish you for your crimes.",
+                Title = "System Message",
+                Content = "You cannot play this software yet.\nWould you like to view more detailed information on the Nintendo eShop?",
+                PrimaryButtonText = "Cancel",
+                SecondaryButtonText = "Nintendo eShop",
             };
 
-            Style bottomBorder = new(x => x.OfType<Grid>().Name("DialogSpace").Child().OfType<Border>());
-            bottomBorder.Setters.Add(new Setter(IsVisibleProperty, false));
-            contentDialog.Styles.Add(bottomBorder);
+            ContentDialogResult result = await contentDialog.ShowAsync();
 
-            await contentDialog.ShowAsync();
+            if (result == ContentDialogResult.Secondary)
+            {
+                Process.Start(new ProcessStartInfo("https://www.nintendo.com/us/store/products/mario-and-luigi-brothership-switch/") { UseShellExecute = true });
+            }
         }
 
         internal static void DeferLoadApplication(string launchPathArg, string launchApplicationId, bool startFullscreenArg)
