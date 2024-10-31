@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Platform;
+using Avalonia.Styling;
 using Avalonia.Threading;
 using DynamicData;
 using FluentAvalonia.UI.Controls;
@@ -154,7 +155,6 @@ namespace Ryujinx.Ava.UI.Windows
             });
         }
 
-        public void Application_Opened(object sender, ApplicationOpenedEventArgs args)
         public async void Application_Opened(object sender, ApplicationOpenedEventArgs args)
         {
             if (args.Application.Id == 72310894309007360)
