@@ -2,6 +2,7 @@ using ARMeilleure.Decoders;
 using ARMeilleure.IntermediateRepresentation;
 using ARMeilleure.State;
 using ARMeilleure.Translation;
+using Ryujinx.Common.Logging;
 using System;
 using System.Reflection;
 
@@ -42,6 +43,12 @@ namespace ARMeilleure.Instructions
                     return;
                 case 0b11_011_0100_0100_001:
                     EmitGetFpsr(context);
+                    return;
+                case 0b11_011_1001_1100_000:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMCR_EL0");
+                    return;
+                case 0b11_011_1001_1100_110:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMCEID0_EL0");
                     return;
                 case 0b11_011_1101_0000_010:
                     EmitGetTpidrEl0(context);
@@ -84,11 +91,35 @@ namespace ARMeilleure.Instructions
                 case 0b11_011_0100_0100_001:
                     EmitSetFpsr(context);
                     return;
+                case 0b11_011_1001_1100_000:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMCR_EL0");
+                    return;
+                case 0b11_011_1001_1100_001:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMCNTENSET_EL0");
+                    return;
                 case 0b11_011_1101_0000_010:
                     EmitSetTpidrEl0(context);
                     return;
                 case 0b11_011_1101_0000_101:
                     EmitGetTpidr2El0(context);
+                    return;
+                case 0b11_011_1110_1100_000:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMEVTYPER0_EL0");
+                    return;
+                case 0b11_011_1110_1100_001:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMEVTYPER1_EL0");
+                    return;
+                case 0b11_011_1110_1100_010:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMEVTYPER2_EL0");
+                    return;
+                case 0b11_011_1110_1100_011:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMEVTYPER3_EL0");
+                    return;
+                case 0b11_011_1110_1100_100:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMEVTYPER4_EL0");
+                    return;
+                case 0b11_011_1110_1100_101:
+                    Logger.Warning?.PrintStub(LogClass.Cpu, "PMEVTYPER5_EL0");
                     return;
 
                 default:
