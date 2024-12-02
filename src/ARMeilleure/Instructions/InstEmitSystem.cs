@@ -101,7 +101,7 @@ namespace ARMeilleure.Instructions
                     EmitSetTpidrEl0(context);
                     return;
                 case 0b11_011_1101_0000_101:
-                    EmitGetTpidr2El0(context);
+                    EmitSetTpidr2El0(context);
                     return;
                 case 0b11_011_1110_1100_000:
                     Logger.Warning?.PrintStub(LogClass.Cpu, "PMEVTYPER0_EL0");
@@ -321,6 +321,17 @@ namespace ARMeilleure.Instructions
             Operand nativeContext = context.LoadArgument(OperandType.I64, 0);
 
             context.Store(context.Add(nativeContext, Const((ulong)NativeContext.GetTpidrEl0Offset())), value);
+        }
+
+        private static void EmitSetTpidr2El0(ArmEmitterContext context)
+        {
+            OpCodeSystem op = (OpCodeSystem)context.CurrOp;
+
+            Operand value = GetIntOrZR(context, op.Rt);
+
+            Operand nativeContext = context.LoadArgument(OperandType.I64, 0);
+
+            context.Store(context.Add(nativeContext, Const((ulong)NativeContext.GetTpidr2El0Offset())), value);
         }
     }
 }
